@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot for Disease Prediction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #ff6666, #66ccff, #99ff99);
+            font-weight: bold;
+
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: minmax(100px, auto);
+            gap: 10px;
+            padding: 20px;
+        }
+        .grid-item {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 10px solid black;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+        }
+        .submit-button {
+            background: linear-gradient(to bottom right, #004d99, #000000);
+            border: none;
+            color: white;
+            padding: 20px;
+            font-size: 1.5em;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            color: white;
+        }
+        .file-input {
+            display: none;
+        }
+        .custom-file-upload {
+            cursor: pointer;
+            background: linear-gradient(to bottom right, #004d99, #000000);
+            color: white;
+            padding: 20px;
+            font-size: 1.5em;
+            border-radius: 20px;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item" style="background-color: #00ffff;">1</div>
+        <div class="grid-item" style="background-color: #00ff00;">2</div>
+        <div class="grid-item" style="background-color: #0000ff;">3</div>
+        <div class="grid-item" style="background-color: #ff00ff;">4</div>
+        <div class="grid-item" style="background-color: #00ffff;">5</div>
+        <div class="grid-item" style="background-color: #ffff00;">6</div>
+        <div class="grid-item" style="background-color: #00ffff;">7</div>
+        <div class="grid-item" style="background-color: #00ff00;">8</div>
+        <div class="grid-item" style="background-color: #0000ff;">9</div>
+    </div>
+    <form id="text-form" action="{% url 'home' %}" style="align-items: center; justify-content: center; display: flex; flex-direction: column;" method="POST">
+        {% csrf_token %}
+        <textarea id="input-text" name="text" rows="4" cols="50" style="border: 6px solid red; border-radius: 20px;text-align: center"></textarea>
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
+    <label for="file-upload" class="custom-file-upload">Upload Text File</label>
+    <input id="file-upload" type="file" class="file-input">
+    <script>
+        document.getElementById('file-upload').addEventListener('change', handleFileSelect, false);
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                document.getElementById('input-text').value = e.target.result;
+            };
+
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+</html>
